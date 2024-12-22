@@ -21,7 +21,7 @@ spring:
           predicates:
             - Path=/chat/**
         - id: auth-service
-          uri:  http://auth-service.default.svc.cluster.local:9080
+          uri:  http://auth-service.default.svc.cluster.local:9000
           predicates:
             - Path=/auth/**
           filters:
