@@ -9,19 +9,19 @@ spring:
           lower-case-service-id: true
       routes:
         - id: user-service
-          uri: lb://user-service
+          uri:  http://user-service.default.svc.cluster.local:8081
           predicates:
             - Path=/users/**
         - id: order-service
-          uri: lb://order-service
+          uri:  http://order-service.default.svc.cluster.local:8083
           predicates:
             - Path=/orders/**
         - id: chat-service
-          uri: lb://chat-service
+          uri:  http://chat-service.default.svc.cluster.local:8082
           predicates:
             - Path=/chat/**
         - id: auth-service
-          uri: lb://auth-service
+          uri:  http://auth-service.default.svc.cluster.local:9080
           predicates:
             - Path=/auth/**
           filters:
@@ -30,13 +30,23 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9000
+          issuer-uri: http://auth-service.default.svc.cluster.local:9000
 server:
   port: 8089
 eureka:
+  instance:
+    preferIpAddress: true
   client:
     service-url:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+management:
+  info:
+    env:
+      enabled: true
+  endpoint:
+    gateway:
+      enabled: true
+
 
 logging:
   level:
